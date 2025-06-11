@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 
 # Define the 2x2 input matrix
 input_matrix = np.array([
-    [0, 5],
-    [10, 15]
+    [0, 63],
+    [128, 255]
 ])
 
 print("Input 2x2 Matrix:")
@@ -16,7 +16,7 @@ print(input_matrix)
 
 # Convert grayscale values to quantum rotation angles
 # theta_yx = (grayscale / max_value) * (pi/2)
-max_value = 15  # Maximum value in our input matrix
+max_value = 255  # Maximum value in our input matrix
 theta = {}
 for y in range(2):
     for x in range(2):
@@ -150,7 +150,7 @@ print(output_matrix.astype(int))
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
 
 # Input matrix
-im1 = ax1.imshow(input_matrix, cmap='gray', vmin=0, vmax=15)
+im1 = ax1.imshow(input_matrix, cmap='gray', vmin=0, vmax=255)
 ax1.set_title('Input 2x2 Matrix')
 ax1.set_xticks([0, 1])
 ax1.set_yticks([0, 1])
@@ -162,7 +162,7 @@ for i in range(2):
         ax1.text(j, i, str(input_matrix[i, j]), ha='center', va='center', color='red', fontweight='bold')
 
 # Output matrix
-im2 = ax2.imshow(output_matrix, cmap='gray', vmin=0, vmax=15)
+im2 = ax2.imshow(output_matrix, cmap='gray', vmin=0, vmax=255)
 ax2.set_title('Upscaled 4x4 Matrix')
 ax2.set_xticks([0, 1, 2, 3])
 ax2.set_yticks([0, 1, 2, 3])
