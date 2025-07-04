@@ -1,0 +1,3 @@
+Interpolation Methods Quality Analysis
+==================================================
+Source: TIFF: Lenna_512_grey.tiff

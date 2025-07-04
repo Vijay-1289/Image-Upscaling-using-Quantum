@@ -5,6 +5,7 @@ from qiskit import QuantumRegister, ClassicalRegister, QuantumCircuit, transpile
 from qiskit_aer import AerSimulator
 import math
 from numpy import pi
+import cv2  # OpenCV for image display
 
 # === STEP 1: Read ASCII file and convert to grayscale image ===
 try:
@@ -99,23 +100,20 @@ result = job.result()
 counts = result.get_counts()
 print(f"Measurement counts: {counts}")
 
-# === STEP 4: Visualization ===
-fig, axs = plt.subplots(1, 2, figsize=(14, 6))
+# === STEP 4: Visualization with OpenCV ===
+# Convert to 3-channel BGR for display
+original_bgr = cv2.cvtColor(original_img, cv2.COLOR_GRAY2BGR)
+upscaled_bgr = cv2.cvtColor(input_matrix, cv2.COLOR_GRAY2BGR)
 
-# Original image
-axs[0].imshow(original_img, cmap='gray', vmin=0, vmax=255)
-axs[0].set_title('Original ASCII Image')
-axs[0].set_xlabel("x")
-axs[0].set_ylabel("y")
+# Optional: Resize for better visibility (optional, depends on screen size)
+# original_resized = cv2.resize(original_bgr, (256, 256), interpolation=cv2.INTER_NEAREST)
+# upscaled_resized = cv2.resize(upscaled_bgr, (512, 512), interpolation=cv2.INTER_NEAREST)
 
-# Upscaled image
-axs[1].imshow(input_matrix, cmap='gray', vmin=0, vmax=255)
-axs[1].set_title('Bilinear Interpolated 128x128 Image')
-axs[1].set_xlabel("x")
-axs[1].set_ylabel("y")
-
-plt.tight_layout()
-plt.show()
+# Show both images simultaneously
+cv2.imshow("Original ASCII Image (64x64)", original_bgr)
+cv2.imshow("Upscaled 128x128 Image", upscaled_bgr)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 
 # === STEP 5: Save Output ===
 np.savetxt("quantum_input_image.txt", input_matrix, fmt="%d")
